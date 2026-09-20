@@ -11,7 +11,7 @@ os.makedirs("models", exist_ok=True)
 env = BlackjackEnvironment(cfg.ppo_starter_money)
 check_env(env)
 
-model = PPO("MlpPolicy", env, verbose=1)
+model = PPO("MlpPolicy", env, verbose=1, ent_coef=cfg.ppo_entropy_coef)
 model.learn(total_timesteps=cfg.ppo_total_train_steps, 
             log_interval=cfg.ppo_log_interval,
             progress_bar=True
@@ -21,12 +21,11 @@ model.save("models/PPO_blackjack_bot")
 
 # Test PPO model on custom Blackjack environment
 model = PPO.load("models/PPO_blackjack_bot")
-num_eval_episodes = 100
 
 bankrolls = []
 rounds = []
 win_rates = []
-for episode_idx in range(num_eval_episodes):
+for episode_idx in range(cfg.num_eval_episodes):
     observation, info = env.reset()
 
     while True:

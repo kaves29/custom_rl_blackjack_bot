@@ -85,17 +85,17 @@ class BlackjackEnvironment(gym.Env):
         )
 
         return np.array(
-            cards + [
-                self.current_hand.hand_value(),
-                int(self.current_hand.soft),
-                self.dealer.cards[0].value,
-                self.current_hand.wager,
-                self.player.player_money,
-                win_rate,
-                self.round_counter,
-                int(can_double),
-                int(can_split)
-            ], dtype=np.float32)
+        cards + [
+            self.current_hand.hand_value() / 21,
+            int(self.current_hand.soft),
+            self.dealer.cards[0].value / 11,
+            self.current_hand.wager / self.starting_bankroll,
+            self.player.player_money / self.starting_bankroll,
+            win_rate,
+            self.round_counter / 200,
+            int(can_double),
+            int(can_split)
+        ], dtype=np.float32)
 
 
     def wager_function(self):

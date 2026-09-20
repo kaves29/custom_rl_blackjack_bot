@@ -73,6 +73,15 @@ def build_observation(hand_cards, dealer_card):
 
     soft = 0
 
+    can_double = (
+        len(hand_cards) == 2
+    )
+
+    can_split = (
+        len(hand_cards) == 2
+        and hand_cards[0] == hand_cards[1]
+    )
+
     wager = max(
         1,
         int(
@@ -93,7 +102,9 @@ def build_observation(hand_cards, dealer_card):
             wager,
             bankroll,
             win_rate,
-            round_counter
+            round_counter,
+            int(can_double),
+            int(can_split)
         ],
         dtype=np.float32
     )
