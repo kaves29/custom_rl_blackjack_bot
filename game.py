@@ -44,8 +44,8 @@ for round_num in range(num_rounds):
     player.hands = [] # reset of player hands
 
     # Round setup
-    empty_deck = Deck([], 1)
-    deck = empty_deck.create()
+    deck = Deck([], 1)
+    deck.create()
 
     print(f"Bankroll: ${player.player_money}")
     initial_player_bet = int(input("Place the amount you want to bet: "))

@@ -15,6 +15,7 @@ class BlackjackEnvironment(gym.Env):
         self.win_counter = 0
         self.total_hands = 0
         self.current_hand_index = 0
+        self.invalid_action_counter = 0
 
         self.action_space = gym.spaces.Discrete(4)
         self.observation_space = gym.spaces.Box(
@@ -204,10 +205,11 @@ class BlackjackEnvironment(gym.Env):
         return self.get_obs(), reward, False, False, {}
 
     def finish_invalid_round(self):
-        self.round_reward = -2
+        self.round_reward = -1
         self.episode_reward += self.round_reward
         self.round_counter += 1
         self.current_hand_index = 0
+        self.invalid_action_counter += 1
 
         if self.player.player_money < 1:
             self.episode_reward -= 20

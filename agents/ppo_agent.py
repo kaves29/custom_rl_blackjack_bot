@@ -2,9 +2,13 @@ from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
 from env import BlackjackEnvironment
 import config as cfg
+import os
+
+# Create models folder if it does not already exist
+os.makedirs("models", exist_ok=True)
 
 # Train PPO model on custom Blackjack environment
-env = BlackjackEnvironment(cfg.random_starter_money)
+env = BlackjackEnvironment(cfg.ppo_starter_money)
 check_env(env)
 
 model = PPO("MlpPolicy", env, verbose=1)
@@ -13,10 +17,10 @@ model.learn(total_timesteps=cfg.ppo_total_train_steps,
             progress_bar=True
             )
 
-model.save("PPO_blackjack_bot")
+model.save("models/PPO_blackjack_bot")
 
 # Test PPO model on custom Blackjack environment
-model = PPO.load("PPO_blackjack_bot")
+model = PPO.load("models/PPO_blackjack_bot")
 num_eval_episodes = 100
 
 bankrolls = []
@@ -39,3 +43,4 @@ for episode_idx in range(num_eval_episodes):
 print("Average bankroll:", sum(bankrolls) / len(bankrolls))
 print("Average rounds:", sum(rounds) / len(rounds))
 print("Average win rate:", sum(win_rates) / len(win_rates))
+print("Invalid actions:", env.invalid_action_counter)

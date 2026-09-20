@@ -34,5 +34,5 @@ The agent has four possible actions:
 1 = Stand
 2 = Double
 3 = Split
-
+```
 **You are also able to play blackjack if you please by running the game.py file :)**

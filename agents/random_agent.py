@@ -25,6 +25,7 @@ for episode_idx in range(cfg.random_num_episodes):
         f"Episode {episode_idx + 1}: "
         f"Reward = {total_reward}, "
         f"Bankroll = ${env.player.player_money}"
+        f"Invalid actions:", env.invalid_action_counter
     )
 
 env.close()
